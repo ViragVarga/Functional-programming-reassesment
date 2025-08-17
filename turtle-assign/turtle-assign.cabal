@@ -9,7 +9,7 @@ version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/turtle-assign#readme>
 homepage:       https://github.com/githubuser/turtle-assign#readme
 bug-reports:    https://github.com/githubuser/turtle-assign/issues
-author:         Author name here
+author:         Virag Varga
 maintainer:     example@example.com
 copyright:      2025 Author name here
 license:        BSD-3-Clause
@@ -25,7 +25,9 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      Draw_1
+      Draw_2
+      Turtle
   other-modules:
       Paths_turtle_assign
   autogen-modules:
@@ -35,6 +37,10 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
+    , extra
+    , mtl
+    , threepenny-gui
+    , transformers
   default-language: Haskell2010
 
 executable turtle-assign-exe
@@ -48,6 +54,9 @@ executable turtle-assign-exe
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , mtl
+    , threepenny-gui
+    , transformers
     , turtle-assign
   default-language: Haskell2010
 

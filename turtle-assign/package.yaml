@@ -35,6 +35,11 @@ ghc-options:
 
 library:
   source-dirs: src
+  dependencies:
+  - transformers
+  - mtl
+  - threepenny-gui
+  - extra
 
 executables:
   turtle-assign-exe:
@@ -46,6 +51,10 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - turtle-assign
+    - transformers
+    - mtl
+    - transformers
+    - threepenny-gui
 
 tests:
   turtle-assign-test:
