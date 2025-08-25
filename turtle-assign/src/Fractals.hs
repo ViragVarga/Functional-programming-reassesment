@@ -9,42 +9,33 @@ import Distribution.Simple.Utils
 import Control.Monad.State
 import Data.IORef
 
+-- new data types to contain information about L-System and Fractal attributes
 type Rule = (Char, String)
 type Rules = [Rule]
 data Fractal = Fractal {rules :: Rules,
                         degrees :: Double,
                         step :: Int}
 
+-- Stack element initiation
 newtype Stack s a = Stack {runStack :: [(Point, Point)] -> (a, [(Point, Point)])}
 
+-- Push and pop functions for stack element
 push :: (Point, Point) -> Stack s ()
 push x = Stack $ \xs -> ((), x:xs)
 
---pop :: Stack s (Maybe (Point, Point))
 pop = Stack $ \st -> case st of
     ((Point x1 y1, Point x2 y2):xs) -> (Just (Point x1 y1, Point x2 y2), xs)
     _ -> (Nothing, [])
---runStack = runState
-
--- do localStack <- liftIO $ newIORef [(Point 0 0, Point 0 0)]
-
--- push :: (Point, Point) -> m ()
--- push newEntry = do
---     liftIO $ modifyIORef' localStack ([newEntry] ++)
--- 
--- --pop :: (Point, Point)
--- pop = do
---     (x:xs) <- liftIO $ readIORef localStack 
---     liftIO $ writeIORef localStack xs
---     x
 
 
+-- Function to apply a list of rules to a character
 applyRules2Char :: [Rule] -> Char -> String
 applyRules2Char [] ch = [ch]
 applyRules2Char ((from, to):rules) ch
     | from == ch = to
     | otherwise = applyRules2Char rules ch
 
+-- Function to apply a list of rules to a list of characters
 applyRules :: [Rule] -> String -> String
 applyRules _ [] = ""
 applyRules [] str = str
@@ -52,7 +43,10 @@ applyRules ((from, to):rules) (ch:chs)
     | from == ch = to ++ applyRules ((from, to):rules) chs
     | otherwise = applyRules2Char rules ch ++ applyRules ((from, to):rules) chs
 
-lSystem :: Fractal -> String -> Int -> Turtle -> [Turtle] -- Turtle
+-- L-System function that takes a Fractal (containing the rules, default
+-- turn angle and muvement unit), an axiom, an Interation number, and an 
+-- initial turtle state and returns a list of turtle states in order of change
+lSystem :: Fractal -> String -> Int -> Turtle -> [Turtle]
 lSystem frac axiom it tr =
     if it < 0
         then []
@@ -62,7 +56,7 @@ lSystem frac axiom it tr =
                 Just instructions ->
                     interpret instructions (degrees frac) (step frac) [] tr
            
-
+-- Function to interpret the instruction string, apply it and return a list of turtle states
 interpret :: String -> Double -> Int -> [(Point, Point)] -> Turtle -> [Turtle]
 interpret [] _ _ _ _= []
 interpret (x:xs) degrees units stack tr =
