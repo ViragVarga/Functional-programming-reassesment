@@ -1,10 +1,10 @@
 module Turtle(
-        Turtle(..), Point(..), Pen, Color(..),
+        Turtle(..), Point(..), Pen(..), Color(..),
         runTurtle, getPosition, setPosition, getDirection, getPen,
         createColor, getColor, setColor, str2Color, applyInt,
         applyPoint, rotateDir, home, forward, backward, left,
         right, penUp, penDown, isPenUp, isPenUpBool, isPenDown,
-        isPenDownBool, errorProtocol
+        isPenDownBool, errorProtocol, initTurtle
     ) where
 
 import Control.Monad.Trans
@@ -132,7 +132,7 @@ initTurtle = Turtle {pos = Point 0 0,
 home :: StateT Turtle Maybe String
 home = do
     put initTurtle
-    lift (Just "Turtle is set to center position facing north.\n")
+    lift (Just "Turtle is set to center position facing north, pen set down and color to black.\n")
 
 
 forward :: Int -> StateT Turtle Maybe String

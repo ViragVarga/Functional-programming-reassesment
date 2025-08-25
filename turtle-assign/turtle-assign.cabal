@@ -27,6 +27,7 @@ library
   exposed-modules:
       Draw_1
       Draw_2
+      Fractals
       Turtle
   other-modules:
       Paths_turtle_assign
@@ -36,7 +37,8 @@ library
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      base >=4.7 && <5
+      Cabal
+    , base >=4.7 && <5
     , extra
     , mtl
     , threepenny-gui
